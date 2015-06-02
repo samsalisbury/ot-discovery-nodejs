@@ -245,7 +245,7 @@ DiscoveryClient.prototype._singleAnnounce = function (announcement, cb) {
   if (!server) {
     this.logger.log('info', 'Cannot announce. No discovery servers available');
     cb(new Error('Cannot announce. No discovery servers available'));
-    disco._scheduleReconnect(); 
+    disco._scheduleReconnect();
     return;
   }
   this.logger.log('debug', 'Announcing ' + JSON.stringify(announcement));
