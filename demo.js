@@ -1,6 +1,15 @@
 var discovery = require('./discovery');
 
-var disco = new discovery("discovery-proxy.proxy.mesos-vpcqa.otenv.com", {
+if (process.argv.length < 3) {
+  console.error("Need discovery server hostname; expected invokation: `node demo.js <DISCO_HOST>`");
+  process.exit(1);
+}
+
+var disco_host = process.argv.slice(2)[0];
+
+console.log("Using discovery service at '" + disco_host + "'");
+
+var disco = new discovery(disco_host, {
   logger: {
     log: function(log){ console.log(log); },
     error: function(error){ console.log(error); },
