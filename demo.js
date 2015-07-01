@@ -1,4 +1,5 @@
 var discovery = require('./discovery');
+var uuid = require("node-uuid");
 
 if (process.argv.length < 3) {
   console.error("Need discovery server hostname; expected invokation: `node demo.js <DISCO_HOST>`");
@@ -6,8 +7,12 @@ if (process.argv.length < 3) {
 }
 
 var disco_host = process.argv.slice(2)[0];
+var service_type = uuid.v4();
+var service_url = "fake://" + uuid.v4();
 
 console.log("Using discovery service at '" + disco_host + "'");
+console.log("Using service type '" + service_type + "'");
+console.log("Using service URL '" + service_url + "'");
 
 var disco = new discovery(disco_host, {
   logger: {
@@ -24,8 +29,8 @@ disco.onUpdate(function(update) {
 disco.connect(function(error, host, servers) {
   console.log("Discovery environment '" + host + "' has servers: " + servers);
   disco.announce({
-    serviceType: "node-discovery-demo",
-    serviceUri: "fake://test"
+    serviceType: service_type,
+    serviceUri: service_url,
   }, function (error, lease) {
     if (error) {
       console.error(error);
